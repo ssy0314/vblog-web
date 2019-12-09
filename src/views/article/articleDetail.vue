@@ -1,7 +1,6 @@
 <template>
     <div>
-        文章详情
-        <el-button type="text" class="el-icon-back">返回</el-button>
+        <el-button type="text" class="el-icon-back" @click="back">返回</el-button>
         <div>
             <h2 style="text-align: center">{{article.title}}</h2>
             <div style="text-align: right">
@@ -30,6 +29,9 @@
             }
         },
         methods:{
+            back(){
+                this.$router.go(-1)
+            },
             initArticle(){
 
                 let article ={

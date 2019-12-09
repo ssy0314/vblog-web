@@ -48,6 +48,9 @@ import 'mavon-editor/dist/css/index.css'
 // use
 Vue.use(mavonEditor)
 
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 new Vue({
   router,
   render: h => h(App)
