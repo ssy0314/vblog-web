@@ -13,7 +13,7 @@
             <el-tab-pane label="回收站" name="fourth">回收站
                 <BlogList status="3" :showEdit=false :showDel=true :showTurn=true :activeName="activeName"></BlogList>
             </el-tab-pane>
-            <el-tab-pane label="博客管理" name="fivth">博客管理
+            <el-tab-pane label="博客管理" name="fivth" >博客管理
                 <BlogList status="-1" :showEdit=false :showDel=true :showTurn=false :activeName="activeName"></BlogList>
             </el-tab-pane>
         </el-tabs>

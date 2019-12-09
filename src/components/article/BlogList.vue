@@ -88,6 +88,9 @@
         },
 
         methods:{
+            handleClick(row){
+                this.$router.push({path:"/articleDetail",query:{aid:row.id}});
+            },
             //更改文章
             handleEdit(data){
                 this.$router.push({ path: '/articleEditor', query: { from: this.activeName,aid:data.id }})

@@ -10,7 +10,7 @@
         </el-select>
         <el-input style="width:300px;margin-left:5px;margin-bottom: 8px " placeholder="请输入标题..." v-model="article.title"></el-input>
         <div id="main" class="mavonEditor">
-            <mavon-editor  style="height:480px;width: 98%;margin:0 auto" v-model="value" @change="editorChange"/>
+            <mavon-editor  style="height:480px;width: 98%;margin:0 auto" v-model="value" @change="editorChange" @save="saveArticle"/>
         </div>
         <el-button v-if="from"  type="primary" style="float: right;margin-top: 8px" @click="publishBtn">发表文章</el-button>
         <el-button v-if="!from"  type="primary" style="float: right;margin-top: 8px" @click="saveBtn">保存修改</el-button>
@@ -28,6 +28,7 @@
                 options: [],
                 colname:'',
                 article:{
+                        id:0,
                         title:'',
                         mdcontent:'',
                         hmcontent:'',
@@ -39,6 +40,68 @@
             }
         },
         methods:{
+            saveArticle(value,render){
+                this.article.status=2;
+                this.postRequest('/article/addArticle',this.article).then(resp =>{
+                    if (resp){
+                        setTimeout(function () {
+                            window.location.reload();
+                        },2000)
+
+                    }
+                })
+                console.log(value);
+                console.log(render);
+            },
+            saveBtn(){
+                this.$confirm('此操作将放弃对文章的修改, 是否继续?', '系统提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    // console.log(this.article)
+                    this.putRequest('/article/putArticle',this.article).then(resp =>{
+                        if(resp){
+                            this.$router.push('/articleList')
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+
+                })
+
+            },
+            falseBtn(){
+                this.$confirm('此操作将放弃对文章的修改, 是否继续?', '系统提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$router.push('/articleList')
+                }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+
+            })
+            },
+            initArticle(){
+                    let article ={
+                        id:this.$route.query.aid
+                    }
+                    this.getRequest('/article/searchArticleById',article).then(resp =>{
+                        if(resp){
+                            this.article.cid =resp.cid;
+                            this.article.title =resp.title;
+                            this.value =resp.mdcontent;
+                            this.article.hmcontent =resp.hmcontent;
+                        }
+                    })
+            },
             publishBtn(){
                 this.postRequest('/article/addArticle',this.article).then(resp =>{
                     if (resp){
@@ -62,7 +125,9 @@
         mounted() {
             let from = this.$route.query.from
             if(from!=null && from!='' && from!=undefined){
+                this.article.id=this.$route.query.aid
                 this.from=false;
+                this.initArticle();
             }
             this.infoColumn()
         }

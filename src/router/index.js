@@ -8,6 +8,7 @@ import List from "../views/article/List";
 import Colmanage from "../views/column/Colmanage";
 import Datamanage from "../views/data/Datamanage";
 import Usermanage from "../views/user/Usermanage";
+import articleDetail from "../views/article/articleDetail";
 Vue.use(VueRouter)
 
 const routes = [
@@ -66,6 +67,16 @@ const routes = [
         hidden:true,
         meta:{
           title:'编辑文章',
+          roles:['ROLE_dba','ROLE_admin','ROLE_user',]
+        },
+      },
+      {
+        path: '/articleDetail',
+        name: 'articleDetail',
+        component: articleDetail,
+        hidden:true,
+        meta:{
+          title:'文章详情',
           roles:['ROLE_dba','ROLE_admin','ROLE_user',]
         },
       }]
