@@ -39,7 +39,6 @@
                 }
                 this.getRequest('/article/getArticleDetail',article).then(resp =>{
                     if(resp){
-                        console.log(resp.user.nickname)
                         this.article.title=resp.title
                         this.article.nickname=resp.user.nickname
                         this.article.views=resp.views

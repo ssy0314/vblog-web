@@ -193,7 +193,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        this.updateManyRequest('/article/updateManyArticle',this.arr).then(resp =>{
+                        this.delManyRequest('/article/updateManyArticle',this.arr).then(resp =>{
                             if(resp){
                                 this.initArticle();
                                 window.location.reload();

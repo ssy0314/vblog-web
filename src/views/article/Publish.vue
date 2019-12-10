@@ -20,6 +20,8 @@
 </template>
 
 <script>
+    import articleDetail from "./articleDetail";
+
     export default {
         name: "Publish",
         data(){
@@ -54,15 +56,15 @@
                 console.log(render);
             },
             saveBtn(){
-                this.$confirm('此操作将放弃对文章的修改, 是否继续?', '系统提示', {
+                this.$confirm('是否保存修改?', '系统提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    // console.log(this.article)
+                    this.article.status=5
                     this.putRequest('/article/putArticle',this.article).then(resp =>{
                         if(resp){
-                            this.$router.push('/articleList')
+                            this.$router.push('/articleList');
                         }
                     })
                 }).catch(() => {

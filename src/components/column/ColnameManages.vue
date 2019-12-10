@@ -85,6 +85,7 @@
             addColumn(){
                 this.postRequest('/column/addColumn',this.addCol).then(resp =>{
                     if(resp){
+                        this.addCol.colname='';
                         this.infoColumn();
                     }
                 })
@@ -139,7 +140,9 @@
                                 this.putRequest('/column/putColumn',this.addCol).then(resp =>{
                                     if(resp){
                                         this.infoColumn();
-                                        this.dialogVisible = false
+                                        this.dialogVisible = false;
+                                        this.addCol.colname=''
+
                                     }
 
                                 })
