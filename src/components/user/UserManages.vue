@@ -39,10 +39,14 @@
                                 trigger="click">
                             <div class="block">
                                 <div class="demonstration">角色列表</div>
-                                <el-cascader
-                                        :options="options"
-                                        :props="props"
-                                        clearable></el-cascader>
+                                <el-select v-model="item.rolesId" multiple placeholder="请选择" @change="changeRoleBtn($event,item.id)" >
+                                    <el-option
+                                            v-for="role in options"
+                                            :key="role.id"
+                                            :label="role.name"
+                                            :value="role.id">
+                                    </el-option>
+                                </el-select>
                             </div>
                             <el-button slot="reference" type="text" class="el-icon-more"></el-button>
                         </el-popover>
@@ -70,14 +74,22 @@
                 url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
                 delivery: true,
                 props: { multiple: true },
-                options: [{
-                    value: 1,
-                    label: '东南',},
-                    {
-                        value: 2,
-                        label: '东北',}
-                ],}},
+                options: [],
+                value1:[1,2],
+                user:{
+                    id:'',
+                    roleId:[]
+                }
+            }
+            },
         methods:{
+
+            changeRoleBtn(row,date){
+                this.user.id=date;
+                this.user.roleId=row;
+                console.log(this.user);
+
+            },
             delBtn(data){
                 let user ={
                     id:data
@@ -124,19 +136,22 @@
                 this.getRequest('/userDom/getUsers').then(resp =>{
                     if(resp){
                         this.userData=resp;
+
                     }
                 })
             },
             initRole(){
-                this.getRequest('/userDom/getUsers').then(resp =>{
+                this.getRequest('/userDom/getRoles').then(resp =>{
                     if(resp){
-                        this.userData=resp;
+                        this.options=resp;
+
                     }
                 })
             }
         },
         mounted() {
             this.initUser();
+            this.initRole();
         }
     }
 </script>
