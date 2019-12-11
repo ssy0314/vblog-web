@@ -61,7 +61,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.article.status=5
+                    if(this.$route.query.from!='third'){this.article.status=5}else {this.article.status=6}
                     this.putRequest('/article/putArticle',this.article).then(resp =>{
                         if(resp){
                             this.$router.push('/articleList');

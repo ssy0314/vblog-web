@@ -33,6 +33,19 @@
                                 class="tag">
                             {{auth.authority}}
                         </el-tag>
+                        <el-popover
+                                placement="right"
+                                width="200px"
+                                trigger="click">
+                            <div class="block">
+                                <div class="demonstration">角色列表</div>
+                                <el-cascader
+                                        :options="options"
+                                        :props="props"
+                                        clearable></el-cascader>
+                            </div>
+                            <el-button slot="reference" type="text" class="el-icon-more"></el-button>
+                        </el-popover>
                     </div>
                 </el-card>
             </el-col>
@@ -56,8 +69,14 @@
                 userData:[],
                 url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
                 delivery: true,
-            }
-        },
+                props: { multiple: true },
+                options: [{
+                    value: 1,
+                    label: '东南',},
+                    {
+                        value: 2,
+                        label: '东北',}
+                ],}},
         methods:{
             delBtn(data){
                 let user ={
@@ -102,7 +121,14 @@
                 })
             },
             initUser(){
-                this.getRequest('/userDom/getUsers?').then(resp =>{
+                this.getRequest('/userDom/getUsers').then(resp =>{
+                    if(resp){
+                        this.userData=resp;
+                    }
+                })
+            },
+            initRole(){
+                this.getRequest('/userDom/getUsers').then(resp =>{
                     if(resp){
                         this.userData=resp;
                     }
